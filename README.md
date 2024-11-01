@@ -17,8 +17,8 @@ Join us as we uncover insights from this data and contribute to stroke preventio
 
 ## 👥 Team Members
 
-| Team Member      | Role                    | GitHub Profile                           |
-| ---------------- | ----------------------- | ---------------------------------------- |
+| Team Member      | Role                    
+| ---------------- | ----------------------- 
 |  **Ebrahem Ragab Moahmed**   | Machine Learning and Deep Learning  
 | **Toka **   | Data Analysis  
 | **Mariam Naeem **   |Data Preprocessing  
