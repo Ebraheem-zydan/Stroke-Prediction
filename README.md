@@ -20,8 +20,8 @@ Join us as we uncover insights from this data and contribute to stroke preventio
 | Team Member      | Role                    
 | ---------------- | ----------------------- 
 |  **Ebrahem Ragab Moahmed**   | Machine Learning and Deep Learning  
-| **Toka **   | Data Analysis  
-| **Mariam Naeem **   |Data Preprocessing  
+| **Toka**   | Data Analysis  
+| **Mariam Naeem**   |Data Preprocessing  
 
 ---
 
