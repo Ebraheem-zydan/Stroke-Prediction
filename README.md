@@ -45,4 +45,4 @@ Join us as we uncover insights from this data and contribute to stroke preventio
 ### Installation
  **Clone the repository:**
    ```bash
-   git clone https://github.com/osama24680/Stroke-Prediction-ALX-AIS3-S1e
+   git clone https://github.com/Ebraheem-zydan/Stroke-Prediction/tree/main
