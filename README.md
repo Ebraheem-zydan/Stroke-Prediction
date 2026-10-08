@@ -1,48 +1,54 @@
-# 🩺 Stroke Prediction Notebook 🚀
+# Stroke Risk Prediction
 
-Welcome to our notebook on the **Prediction of Strokes**! This project aims to analyze and predict the risk of stroke occurrences using machine learning, aiding in early diagnosis and preventive healthcare measures. Stroke, a serious medical condition, is among the leading causes of death globally, accounting for approximately 11% of total deaths worldwide according to the **World Health Organization (WHO)**.
+Predicting stroke risk from patient health and lifestyle data with classical ML and ensemble models.
+This was a team project. I owned the **modeling**: preprocessing pipeline, model selection, hyperparameter tuning and evaluation.
 
----
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-EC6B23)
+![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white)
 
-## 🌟 Project Description
+## Dataset
+[`Dataset.csv`](Dataset.csv): 5,110 patients, 11 features (age, gender, hypertension, heart disease, marital status, work type, residence, average glucose, BMI, smoking status) and a binary `stroke` target.
+The data is **heavily imbalanced**: only about 5% of patients had a stroke.
 
-Stroke can have life-altering consequences. Early detection of potential stroke cases is critical for timely intervention and improved health outcomes. Using a dataset with various health and lifestyle parameters, we employ machine learning models to predict the likelihood of a stroke occurrence. Features analyzed include:
-- **Patient Demographics:** Gender, age, smoking status
-- **Health Conditions:** Diabetes, hypertension, heart conditions
-- **Lifestyle Factors:** Physical activity, smoking status
+## Pipeline
+1. **EDA**: 15 guided questions (e.g. *does hypertension raise stroke risk?*, *BMI and glucose vs. stroke*) answered with seaborn/plotly charts.
+2. **Cleaning**: null handling (BMI), outlier treatment, duplicate checks.
+3. **Encoding and scaling**: categorical encoding + `StandardScaler`.
+4. **Class balancing**: upsampling of the minority class with `sklearn.utils.resample`.
+5. **Modeling**: six model families tuned with `GridSearchCV`.
 
-Join us as we uncover insights from this data and contribute to stroke prevention and awareness efforts. 💊💡
+## Results (test set, n = 1,931)
 
----
+| Model | Accuracy | Notes |
+|---|---|---|
+| **Stacking** (SVM + Decision Tree + LogReg + KNN → LogReg) | **0.992** | best overall |
+| Decision Tree (gini, tuned) | 0.981 | |
+| XGBoost (lr 0.2, depth 5, 300 trees) | 0.978 | train acc 0.9999 |
+| KNN (k=3, manhattan, distance-weighted) | 0.946 | |
+| Logistic Regression (C=1, L2) | 0.776 | linear baseline |
 
-## 👥 Team Members
+## ⚠️ Known limitation, and what I'd do differently
+The minority class was upsampled **before** the train/test split, so duplicated stroke cases appear in both sets. This inflates the scores above. The near-perfect train accuracy for XGBoost is a symptom.
+The fix:
+- Split first (stratified).
+- Resample or use SMOTE **only on the training fold**, inside a `Pipeline`, so cross-validation stays honest.
+- Report **recall, PR-AUC and F1 on the stroke class** instead of accuracy, since missing a stroke is the costly error.
 
-| Team Member      | Role                    
-| ---------------- | ----------------------- 
-|  **Ebrahem Ragab Moahmed**   | Machine Learning and Deep Learning  
-| **Toka**   | Data Analysis  
-| **Mariam Naeem**   |Data Preprocessing  
+## Run it
+```bash
+git clone https://github.com/Ebraheem-zydan/Stroke-Prediction.git
+cd Stroke-Prediction
+pip install pandas numpy scikit-learn xgboost seaborn plotly missingno matplotlib
+jupyter notebook NoteBook.ipynb
+```
 
----
+## Team
+| Member | Focus |
+|---|---|
+| **Ibrahim Ragab** | Modeling: preprocessing pipeline, model selection, tuning, evaluation |
+| Toka | Data analysis |
+| Mariam Naeem | Data preprocessing |
 
-## 🎨 Features & Visualizations
-
-### Key Features
-- **Data Analysis and Visualization:** Comprehensive visualizations to understand the correlation between health parameters and stroke risks.
-- **Preprocessing Pipeline:** Data cleaning, scaling, and transformation techniques for high-quality inputs.
-- **Predictive Modeling:** Use of algorithms like logistic regression, decision trees, and neural networks for stroke risk prediction.
-- **Interactive Dashboard (Future Scope):** A user-friendly interface for healthcare professionals to input patient data and view predictions.
-
-### Visualizations
-- **Correlation Heatmaps** to visualize relationships between features.
-- **Distribution Plots** of high-risk factors by demographics.
-- **ROC Curves & AUC Scores** for model performance.
-
----
-
-## 🚀 Getting Started
-
-### Installation
- **Clone the repository:**
-   ```bash
-   git clone https://github.com/Ebraheem-zydan/Stroke-Prediction/tree/main
+Slides: [`Presentation.pptx`](Presentation.pptx)
